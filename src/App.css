@@ -2,6 +2,18 @@
   font-family: "PT Sans", sans-serif;
 }
 
+.sketchy {
+  padding: 4rem 8rem;
+  display: inline-block;
+  border: 3px solid #333333;
+  font-size: 2.5rem;
+  border-radius: 6%;
+  /* text-transform: uppercase; */
+  letter-spacing: 0.3ch;
+  background: #ffffff;
+  position: relative;
+}
+
 .App {
   text-align: center;
 }
