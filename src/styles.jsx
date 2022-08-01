@@ -1,10 +1,14 @@
 const styles = {
   mainColor: {
-    backgroundColor: "#bde5f5",
-    borderColor: "#D3D3D3",
+    backgroundColor: "#DCDCDC",
+    borderColor: "#3D3D3D",
     color: "#000000"
   },
-  navItem: {
+  navItemInactive: {
+    color: "white",
+    textDecoration: "undefine"
+  },
+  navItemActive: {
     color: "white",
     textDecoration: "undefine"
   }

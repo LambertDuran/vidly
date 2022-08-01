@@ -32,7 +32,7 @@ class MovieNavbar extends Component {
                     to={navItem.route}
                     className="m-2"
                     style={({ isActive }) =>
-                      isActive ? undefined : styles.navItem
+                      isActive ? styles.navItemActive : styles.navItemInactive
                     }
                   >
                     {navItem.name}
