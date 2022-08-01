@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 
-class MovieNavbar extends Component {
+class NavBar extends Component {
   navItems = [
     { name: "Movies", route: "/" },
     { name: "Customers", route: "/customers" },
-    { name: "Rental", route: "/rentals" }
+    { name: "Rental", route: "/rentals" },
+    { name: "Login", route: "/login" }
   ];
 
   render() {
@@ -21,13 +22,13 @@ class MovieNavbar extends Component {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav">
             {this.navItems.map(i => {
               return (
-                <li className="nav-item">
+                <li className="nav-item" key={i.name}>
                   <NavLink className="nav-link" to={i.route}>
                     {i.name}
                   </NavLink>
@@ -41,4 +42,4 @@ class MovieNavbar extends Component {
   }
 }
 
-export default MovieNavbar;
+export default NavBar;
