@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import styles from "./styles.jsx";
-import Form from "./Form";
+import Input from "./Input";
 
 class LoginForm extends Component {
   constructor(props) {
@@ -28,22 +28,22 @@ class LoginForm extends Component {
       <form onSubmit={this.handleSubmit}>
         <div style={styles.rectOut}>
           <div className="sketchy">
-            <Form
+            <Input
               title="Email Adress"
               type="email"
               placeholder="example@gmail.com"
               name="userName"
               onChange={this.handleChange}
               value={this.state.userName}
-            ></Form>
-            <Form
+            ></Input>
+            <Input
               title="Password"
               type="password"
               name="password"
               onChange={this.handleChange}
               subText="Must contain at least 1 digit, 1 letter and 1 special character"
               value={this.state.password}
-            ></Form>
+            ></Input>
             <button type="submit" className="btn btn-primary m-4">
               Submit
             </button>

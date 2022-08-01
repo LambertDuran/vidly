@@ -1,6 +1,14 @@
 import React from "react";
 
-const Form = ({ title, type, placeholder, name, onChange, subText, value }) => {
+const Input = ({
+  title,
+  type,
+  placeholder,
+  name,
+  onChange,
+  subText,
+  value
+}) => {
   return (
     <div className="form-group m-4">
       <label htmlFor={type}>{title}</label>
@@ -26,4 +34,4 @@ const Form = ({ title, type, placeholder, name, onChange, subText, value }) => {
   );
 };
 
-export default Form;
+export default Input;
