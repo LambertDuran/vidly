@@ -1,48 +1,42 @@
 import React, { Component } from "react";
-
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
 import { NavLink } from "react-router-dom";
-import styles from "./styles";
 
 class MovieNavbar extends Component {
-  constructor(props) {
-    super(props);
-
-    this.navItems = [
-      { name: "Movies", route: "/" },
-      { name: "Customers", route: "/customers" },
-      { name: "Rental", route: "/rentals" }
-    ];
-  }
+  navItems = [
+    { name: "Movies", route: "/" },
+    { name: "Customers", route: "/customers" },
+    { name: "Rental", route: "/rentals" }
+  ];
 
   render() {
     return (
-      <Navbar bg="dark" variant="dark" expand="md">
-        <Container fluid>
-          <Navbar.Brand>Vidly</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              {this.navItems.map(navItem => {
-                return (
-                  <NavLink
-                    key={navItem.name}
-                    to={navItem.route}
-                    className="m-2"
-                    style={({ isActive }) =>
-                      isActive ? styles.navItemActive : styles.navItemInactive
-                    }
-                  >
-                    {navItem.name}
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a className="navbar-brand m-2">Vidly</a>
+        <button
+          className="navbar-toggler m-2"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse">
+          <ul className="navbar-nav">
+            {this.navItems.map(i => {
+              return (
+                <li className="nav-item">
+                  <NavLink className="nav-link" to={i.route}>
+                    {i.name}
                   </NavLink>
-                );
-              })}
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </nav>
     );
   }
 }
