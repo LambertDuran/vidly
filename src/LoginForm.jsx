@@ -3,7 +3,7 @@ import "./App.css";
 import styles from "./styles.jsx";
 import Form from "./Form";
 
-class Login extends Component {
+class LoginForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,18 +12,20 @@ class Login extends Component {
     };
   }
 
-  handleChange = e => {
-    this.setState({ ...this.state, [e.target.name]: e.target.value });
-    console.log(this.state[e.target.name]);
+  handleChange = ({ target: input }) => {
+    this.setState({ ...this.state, [input.name]: input.value });
   };
 
-  handleClick = () => {
-    console.log(this.state);
+  handleSubmit = e => {
+    e.preventDefault();
+
+    // Call the server
+    console.log("submitted");
   };
 
   render() {
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <div style={styles.rectOut}>
           <div className="sketchy">
             <Form
@@ -32,19 +34,17 @@ class Login extends Component {
               placeholder="example@gmail.com"
               name="userName"
               onChange={this.handleChange}
+              value={this.state.userName}
             ></Form>
             <Form
               title="Password"
               type="password"
               name="password"
               onChange={this.handleChange}
-              small="Must contain at least 1 digit, 1 letter and 1 special character"
+              subText="Must contain at least 1 digit, 1 letter and 1 special character"
+              value={this.state.password}
             ></Form>
-            <button
-              type="submit"
-              className="btn btn-primary m-4"
-              onClick={this.handleClick}
-            >
+            <button type="submit" className="btn btn-primary m-4">
               Submit
             </button>
           </div>
@@ -54,4 +54,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default LoginForm;

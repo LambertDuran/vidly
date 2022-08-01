@@ -7,7 +7,7 @@ import Rentals from "./Rentals";
 import { Route, Routes } from "react-router-dom";
 import NotFound from "./NotFound";
 import Movie from "./Movie";
-import Login from "./Login";
+import LoginForm from "./LoginForm";
 
 class App extends Component {
   constructor(props) {
@@ -24,7 +24,7 @@ class App extends Component {
           <Route path="movies" element={<MoviesTable />}></Route>
           <Route path="customers" element={<Customers />}></Route>
           <Route path="rentals" exact element={<Rentals />}></Route>
-          <Route path="login" exact element={<Login />}></Route>
+          <Route path="login" exact element={<LoginForm />}></Route>
           <Route path="movie/:_id" exact element={<Movie />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>

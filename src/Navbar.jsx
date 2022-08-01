@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 
 class NavBar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   navItems = [
     { name: "Movies", route: "/" },
     { name: "Customers", route: "/customers" },
@@ -24,7 +29,7 @@ class NavBar extends Component {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse">
+        <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             {this.navItems.map(i => {
               return (

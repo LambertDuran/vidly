@@ -1,6 +1,6 @@
 import React from "react";
 
-const Form = ({ title, type, placeholder, name, onChange, subText }) => {
+const Form = ({ title, type, placeholder, name, onChange, subText, value }) => {
   return (
     <div className="form-group m-4">
       <label htmlFor={type}>{title}</label>
@@ -11,6 +11,7 @@ const Form = ({ title, type, placeholder, name, onChange, subText }) => {
         placeholder={placeholder}
         name={name}
         onChange={onChange}
+        value={value}
       />
       {subText && (
         <small
@@ -18,7 +19,7 @@ const Form = ({ title, type, placeholder, name, onChange, subText }) => {
           className="form-text text-muted"
           style={{ fontSize: "1rem", letterSpacing: "0.1ch" }}
         >
-          subText
+          {subText}
         </small>
       )}
     </div>
