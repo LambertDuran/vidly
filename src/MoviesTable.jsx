@@ -101,7 +101,7 @@ class MoviesTable extends Component {
     const { filteredMovies, moviesToPrint, nbPages } = this.sortMovies();
 
     return (
-      <div className="App">
+      <div className="App" style={{ paddingLeft: 20, paddingRight: 20 }}>
         <div className="container">
           <div className="row">
             {/* Filtre sur les genres de films */}

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import "./App.css";
 import styles from "./styles.jsx";
 import Input from "./Input";
+//import cinema from "./img/cinema.jpg";
+import cinema from "./img/cinema.webp";
 
 class LoginForm extends Component {
   constructor(props) {
@@ -25,7 +27,19 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form
+        onSubmit={this.handleSubmit}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          backgroundImage: `url(${cinema})`,
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          width: "100vw",
+          height: "100vh"
+        }}
+      >
         <div style={styles.rectOut}>
           <div className="sketchy">
             <Input
