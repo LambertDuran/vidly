@@ -5,10 +5,8 @@
 .sketchy {
   padding: 2rem 4rem;
   display: inline-block;
-  border: 3px solid #333333;
-  font-size: 2.5rem;
+  font-size: 2rem;
   border-radius: 6%;
-  /* text-transform: uppercase; */
   letter-spacing: 0.3ch;
   background: #ffffff;
   position: relative;

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class NavBar extends Component {
   navItems = [
@@ -19,6 +19,8 @@ class NavBar extends Component {
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
             aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon"></span>
@@ -27,16 +29,17 @@ class NavBar extends Component {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               {this.navItems.map(i => {
                 return (
-                  <li className="nav-item" key={i.name}>
-                    <Link className="nav-link" to={i.route}>
+                  <Link className="nav-link" to={i.route} key={i.name}>
+                    <li className="nav-item">
                       <span
                         data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent"
+                        aria-expanded="false"
                       >
                         {i.name}
                       </span>
-                    </Link>
-                  </li>
+                    </li>
+                  </Link>
                 );
               })}
             </ul>
