@@ -1,12 +1,7 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 class NavBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   navItems = [
     { name: "Movies", route: "/" },
     { name: "Customers", route: "/customers" },
@@ -24,8 +19,6 @@ class NavBar extends Component {
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
             aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon"></span>
@@ -35,14 +28,14 @@ class NavBar extends Component {
               {this.navItems.map(i => {
                 return (
                   <li className="nav-item" key={i.name}>
-                    <NavLink
-                      className="nav-link"
-                      to={i.route}
-                      // data-bs-toggle="collapse"
-                      // data-bs-target=".navbar-collapse.show"
-                    >
-                      {i.name}
-                    </NavLink>
+                    <Link className="nav-link" to={i.route}>
+                      <span
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
+                      >
+                        {i.name}
+                      </span>
+                    </Link>
                   </li>
                 );
               })}
