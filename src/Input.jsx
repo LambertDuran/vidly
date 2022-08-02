@@ -1,35 +1,17 @@
 import React from "react";
 
-const Input = ({
-  title,
-  type,
-  placeholder,
-  name,
-  onChange,
-  subText,
-  value
-}) => {
+const Input = ({ type, placeholder, name, onChange, value }) => {
   return (
-    <div className="form-group m-4">
-      <label htmlFor={type}>{title}</label>
+    <div className="form-outline mb-4">
       <input
         type={type}
         className="form-control"
-        id={type}
         placeholder={placeholder}
         name={name}
+        id={type}
         onChange={onChange}
         value={value}
       />
-      {subText && (
-        <small
-          id={type}
-          className="form-text text-muted"
-          style={{ fontSize: "1rem", letterSpacing: "0.1ch" }}
-        >
-          {subText}
-        </small>
-      )}
     </div>
   );
 };
