@@ -5,19 +5,18 @@ import Input from "./Input";
 import movie from "./img/movie.jpg";
 import Joi from "joi-browser";
 
-const userNameSchema = Joi.object().keys({
+const schema = Joi.object().keys({
   userName: Joi.string()
     .alphanum()
     .min(3)
     .max(30)
-    .required()
-});
-
-const passwordSchema = Joi.object().keys({
+    .label("Username")
+    .required(),
   password: Joi.string()
     .alphanum()
     .min(3)
     .max(30)
+    .label("Password")
     .required()
 });
 
@@ -31,40 +30,43 @@ class LoginForm extends Component {
   }
 
   handleChange = ({ target: input }) => {
+    // Clone state
     let newState = { ...this.state };
-    newState.account[input.name] = input.value;
 
-    // Validate during typing
-    newState.errors[input.name] = this.validateProperty(input.name);
+    // Get value of the field
+    const path = input.name;
+    newState.account[path] = input.value;
+
+    // Validate value during typing
+    newState.errors[path] = this.validateProperty(path);
 
     this.setState(newState);
   };
 
   validateProperty = name => {
-    const { account } = this.state;
-
     // Validate input with Joi
-    const details = Joi.validate(
-      account,
-      name === "userName" ? userNameSchema : passwordSchema
-    ).error.details;
+    const options = { abortEarly: false };
+    const results = Joi.validate(this.state.account, schema, options);
 
-    // Format output
-    let errorMsg = details.length ? details[0].message : "";
-    errorMsg = errorMsg.replace(
-      `"${name}"`,
-      `Your ${name === "userName" ? "email adress" : "password"}`
-    );
+    if (!results || !results.error) return null;
 
-    console.log(details);
+    let errors = {};
+    for (let item of results.error.details) errors[item.path[0]] = item.message;
 
-    return errorMsg;
+    return errors[name];
   };
 
   validate = () => {
-    let { errors, account } = this.state;
-    errors.userName = this.validateProperty("userName");
-    errors.password = this.validateProperty("password");
+    let { errors } = this.state;
+    // errors.userName = this.validateProperty("userName").userName;
+    // errors.password = this.validateProperty("password").password;
+    errors = Object.assign(
+      errors,
+      Object.assign(
+        this.validateProperty("userName"),
+        this.validateProperty("password")
+      )
+    );
 
     return !Object.keys(errors).length ? null : errors;
   };
