@@ -3,6 +3,23 @@ import "./App.css";
 import "./LoginForm.css";
 import Input from "./Input";
 import movie from "./img/movie.jpg";
+import Joi from "joi-browser";
+
+const userNameSchema = Joi.object().keys({
+  userName: Joi.string()
+    .alphanum()
+    .min(3)
+    .max(30)
+    .required()
+});
+
+const passwordSchema = Joi.object().keys({
+  password: Joi.string()
+    .alphanum()
+    .min(3)
+    .max(30)
+    .required()
+});
 
 class LoginForm extends Component {
   constructor(props) {
@@ -25,13 +42,30 @@ class LoginForm extends Component {
 
   validateProperty = name => {
     const { account } = this.state;
-    return account[name].trim() === "" ? "You need to fill this field" : "";
+
+    // Validate input with Joi
+    const details = Joi.validate(
+      account,
+      name === "userName" ? userNameSchema : passwordSchema
+    ).error.details;
+
+    // Format output
+    let errorMsg = details.length ? details[0].message : "";
+    errorMsg = errorMsg.replace(
+      `"${name}"`,
+      `Your ${name === "userName" ? "email adress" : "password"}`
+    );
+
+    console.log(details);
+
+    return errorMsg;
   };
 
   validate = () => {
-    let { errors } = this.state;
+    let { errors, account } = this.state;
     errors.userName = this.validateProperty("userName");
     errors.password = this.validateProperty("password");
+
     return !Object.keys(errors).length ? null : errors;
   };
 
@@ -44,9 +78,8 @@ class LoginForm extends Component {
 
     this.setState({ errors: errors ? errors : {} });
 
-    if (errors) return;
-
     // Call the server
+    if (errors) return;
     console.log("submitted");
   };
 
