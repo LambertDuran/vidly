@@ -3,29 +3,57 @@ import "./App.css";
 import "./LoginForm.css";
 import Input from "./Input";
 import movie from "./img/movie.jpg";
-//import cinema from "./img/cinema.webp";
 
 class LoginForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userName: "",
-      password: ""
+      account: { userName: "", password: "" },
+      errors: { userName: "", password: "" }
     };
   }
 
   handleChange = ({ target: input }) => {
-    this.setState({ ...this.state, [input.name]: input.value });
+    let newState = { ...this.state };
+    newState.account[input.name] = input.value;
+
+    // Validate during typing
+    newState.errors[input.name] = this.validateProperty(input.name);
+
+    this.setState(newState);
+  };
+
+  validateProperty = name => {
+    const { account } = this.state;
+    return account[name].trim() === "" ? "You need to fill this field" : "";
+  };
+
+  validate = () => {
+    let { errors } = this.state;
+    errors.userName = this.validateProperty("userName");
+    errors.password = this.validateProperty("password");
+    return !Object.keys(errors).length ? null : errors;
   };
 
   handleSubmit = e => {
+    // Prevent validation without filling form!
     e.preventDefault();
+
+    // Check for errors
+    const errors = this.validate();
+
+    this.setState({ errors: errors ? errors : {} });
+
+    if (errors) return;
 
     // Call the server
     console.log("submitted");
   };
 
   render() {
+    const { userName, password } = this.state.account;
+    const { errors } = this.state;
+
     return (
       <section
         className="h-25 gradient-form"
@@ -50,26 +78,36 @@ class LoginForm extends Component {
                       <form onSubmit={this.handleSubmit}>
                         <p>Login to your account</p>
 
+                        {errors.userName && (
+                          <span className="alet alert-danger">
+                            {errors.userName}
+                          </span>
+                        )}
                         <Input
                           type="email"
                           onChange={this.handleChange}
                           name="userName"
-                          value={this.state.userName}
+                          value={userName}
                           placeholder="Username"
                         />
 
+                        {errors.password && (
+                          <span className="alet alert-danger">
+                            {errors.password}
+                          </span>
+                        )}
                         <Input
                           type="password"
                           onChange={this.handleChange}
                           name="password"
-                          value={this.state.password}
+                          value={password}
                           placeholder="Password"
                         />
 
                         <div className="text-center pt-1 mb-5 pb-1">
                           <button
                             className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
-                            type="button"
+                            type="submit"
                           >
                             Log in
                           </button>
