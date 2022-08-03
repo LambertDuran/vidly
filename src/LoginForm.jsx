@@ -5,20 +5,14 @@ import Input from "./Input";
 import movie from "./img/movie.jpg";
 import Joi from "joi-browser";
 
-const schema = Joi.object().keys({
+const schema = {
   userName: Joi.string()
-    .alphanum()
-    .min(3)
-    .max(30)
     .label("Username")
     .required(),
   password: Joi.string()
-    .alphanum()
-    .min(3)
-    .max(30)
     .label("Password")
     .required()
-});
+};
 
 class LoginForm extends Component {
   constructor(props) {
@@ -38,41 +32,40 @@ class LoginForm extends Component {
     newState.account[path] = input.value;
 
     // Validate value during typing
-    newState.errors[path] = this.validateProperty(path);
+    const errors = this.validateProperty(path);
+    newState.errors = errors ? errors : {};
 
+    // Modify state
     this.setState(newState);
   };
 
   validateProperty = name => {
+    let { errors } = this.state;
+    errors[name] = "";
+
     // Validate input with Joi
-    const options = { abortEarly: false };
-    const results = Joi.validate(this.state.account, schema, options);
+    const data = { [name]: this.state.account[name] };
+    const subSchema = { [name]: schema[name] };
+    const results = Joi.validate(data, subSchema);
 
-    if (!results || !results.error) return null;
+    if (!results.error) return null;
 
-    let errors = {};
     for (let item of results.error.details) errors[item.path[0]] = item.message;
 
-    return errors[name];
+    return errors;
   };
 
   validate = () => {
-    let { errors } = this.state;
-    // errors.userName = this.validateProperty("userName").userName;
-    // errors.password = this.validateProperty("password").password;
-    errors = Object.assign(
-      errors,
-      Object.assign(
-        this.validateProperty("userName"),
-        this.validateProperty("password")
-      )
-    );
+    let errors = {
+      ...this.validateProperty("userName"),
+      ...this.validateProperty("password")
+    };
 
-    return !Object.keys(errors).length ? null : errors;
+    return Object.keys(errors).length ? errors : null;
   };
 
   handleSubmit = e => {
-    // Prevent validation without filling form!
+    // Prevent validation without filling form
     e.preventDefault();
 
     // Check for errors
