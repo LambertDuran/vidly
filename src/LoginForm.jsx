@@ -1,85 +1,35 @@
-import React, { Component } from "react";
+import React from "react";
 import "./App.css";
 import "./LoginForm.css";
 import Input from "./Input";
+import Form from "./Form";
 import movie from "./img/movie.jpg";
 import Joi from "joi-browser";
 
-const schema = {
-  userName: Joi.string()
-    .label("Username")
-    .required(),
-  password: Joi.string()
-    .label("Password")
-    .required()
-};
-
-class LoginForm extends Component {
+class LoginForm extends Form {
   constructor(props) {
     super(props);
     this.state = {
-      account: { userName: "", password: "" },
+      data: { userName: "", password: "" },
       errors: { userName: "", password: "" }
+    };
+
+    this.schema = {
+      userName: Joi.string()
+        .label("Username")
+        .required(),
+      password: Joi.string()
+        .label("Password")
+        .required()
     };
   }
 
-  handleChange = ({ target: input }) => {
-    // Clone state
-    let newState = { ...this.state };
-
-    // Get value of the field
-    const path = input.name;
-    newState.account[path] = input.value;
-
-    // Validate value during typing
-    const errors = this.validateProperty(path);
-    newState.errors = errors ? errors : {};
-
-    // Modify state
-    this.setState(newState);
-  };
-
-  validateProperty = name => {
-    let { errors } = this.state;
-    errors[name] = "";
-
-    // Validate input with Joi
-    const data = { [name]: this.state.account[name] };
-    const subSchema = { [name]: schema[name] };
-    const results = Joi.validate(data, subSchema);
-
-    if (!results.error) return null;
-
-    for (let item of results.error.details) errors[item.path[0]] = item.message;
-
-    return errors;
-  };
-
-  validate = () => {
-    let errors = {
-      ...this.validateProperty("userName"),
-      ...this.validateProperty("password")
-    };
-
-    return Object.keys(errors).length ? errors : null;
-  };
-
-  handleSubmit = e => {
-    // Prevent validation without filling form
-    e.preventDefault();
-
-    // Check for errors
-    const errors = this.validate();
-
-    this.setState({ errors: errors ? errors : {} });
-
-    // Call the server
-    if (errors) return;
+  doSubmit = () => {
     console.log("submitted");
   };
 
   render() {
-    const { userName, password } = this.state.account;
+    const { userName, password } = this.state.data;
     const { errors } = this.state;
 
     return (
@@ -136,6 +86,7 @@ class LoginForm extends Component {
                           <button
                             className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
                             type="submit"
+                            disabled={this.validate()}
                           >
                             Log in
                           </button>
