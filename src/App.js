@@ -8,6 +8,7 @@ import { Route, Routes } from "react-router-dom";
 import NotFound from "./NotFound";
 import Movie from "./Movie";
 import LoginForm from "./login/LoginForm";
+import RegisterForm from "./login/RegisterForm";
 
 class App extends Component {
   constructor(props) {
@@ -25,6 +26,7 @@ class App extends Component {
           <Route path="customers" element={<Customers />}></Route>
           <Route path="rentals" exact element={<Rentals />}></Route>
           <Route path="login" exact element={<LoginForm />}></Route>
+          <Route path="register" exact element={<RegisterForm />}></Route>
           <Route path="movie/:_id" exact element={<Movie />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>

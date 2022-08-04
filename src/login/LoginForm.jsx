@@ -4,6 +4,7 @@ import "./LoginForm.css";
 import Form from "./Form";
 import movie from "../img/movie.jpg";
 import Joi from "joi-browser";
+import { Link } from "react-router-dom";
 
 class LoginForm extends Form {
   constructor(props) {
@@ -52,8 +53,8 @@ class LoginForm extends Form {
                       <form onSubmit={this.handleSubmit}>
                         <p>Login to your account</p>
 
-                        {this.renderInput("email", "userName", "Username")}
-                        {this.renderInput("password", "password", "Password")}
+                        {this.renderInput("userName", "Username", "email")}
+                        {this.renderInput("password", "Password", "password")}
 
                         <div className="text-center pt-1 mb-5 pb-1">
                           {this.renderButton("Log in")}
@@ -64,12 +65,14 @@ class LoginForm extends Form {
 
                         <div className="d-flex align-items-center justify-content-center pb-4">
                           <p className="mb-0 me-2">Don't have an account?</p>
-                          <button
-                            type="button"
-                            className="btn btn-outline-danger"
-                          >
-                            Create new
-                          </button>
+                          <Link to="/register">
+                            <button
+                              type="button"
+                              className="btn btn-outline-danger"
+                            >
+                              Create new
+                            </button>
+                          </Link>
                         </div>
                       </form>
                     </div>
