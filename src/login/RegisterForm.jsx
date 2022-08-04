@@ -24,14 +24,20 @@ class RegisterForm extends Form {
     };
   }
 
+  doSubmit = () => {
+    console.log("submitted");
+  };
+
   render() {
     return (
       <div style={{ justifyContent: "center", padding: 100 }}>
-        <p>Create your account</p>
-        {this.renderInput("userName", "Username", "email")}
-        {this.renderInput("password", "Password", "password")}
-        {this.renderInput("pseudo", "Pseudo")}
-        {this.renderButton("Register")}
+        <form onSubmit={this.handleSubmit}>
+          <p>Create your account</p>
+          {this.renderInput("userName", "Username", "email")}
+          {this.renderInput("password", "Password", "password")}
+          {this.renderInput("pseudo", "Pseudo")}
+          {this.renderButton("Register")}
+        </form>
       </div>
     );
   }
