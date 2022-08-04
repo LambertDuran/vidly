@@ -7,7 +7,7 @@ import Rentals from "./Rentals";
 import { Route, Routes } from "react-router-dom";
 import NotFound from "./NotFound";
 import Movie from "./Movie";
-import LoginForm from "./LoginForm";
+import LoginForm from "./login/LoginForm";
 
 class App extends Component {
   constructor(props) {

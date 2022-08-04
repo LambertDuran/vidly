@@ -1,9 +1,8 @@
 import React from "react";
-import "./App.css";
+import "../App.css";
 import "./LoginForm.css";
-import Input from "./Input";
 import Form from "./Form";
-import movie from "./img/movie.jpg";
+import movie from "../img/movie.jpg";
 import Joi from "joi-browser";
 
 class LoginForm extends Form {
@@ -29,9 +28,6 @@ class LoginForm extends Form {
   };
 
   render() {
-    const { userName, password } = this.state.data;
-    const { errors } = this.state;
-
     return (
       <section
         className="h-25 gradient-form"
@@ -56,40 +52,11 @@ class LoginForm extends Form {
                       <form onSubmit={this.handleSubmit}>
                         <p>Login to your account</p>
 
-                        {errors.userName && (
-                          <span className="alet alert-danger">
-                            {errors.userName}
-                          </span>
-                        )}
-                        <Input
-                          type="email"
-                          onChange={this.handleChange}
-                          name="userName"
-                          value={userName}
-                          placeholder="Username"
-                        />
-
-                        {errors.password && (
-                          <span className="alet alert-danger">
-                            {errors.password}
-                          </span>
-                        )}
-                        <Input
-                          type="password"
-                          onChange={this.handleChange}
-                          name="password"
-                          value={password}
-                          placeholder="Password"
-                        />
+                        {this.renderInput("email", "userName", "Username")}
+                        {this.renderInput("password", "password", "Password")}
 
                         <div className="text-center pt-1 mb-5 pb-1">
-                          <button
-                            className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
-                            type="submit"
-                            disabled={this.validate()}
-                          >
-                            Log in
-                          </button>
+                          {this.renderButton("Log in")}
                           <a className="text-muted m-3" href="#!">
                             Forgot password?
                           </a>
