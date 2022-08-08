@@ -11,4 +11,16 @@ const Input = ({ errors, type = "text", ...rest }) => {
   );
 };
 
-export default Input;
+const Select = ({ items }) => {
+  return (
+    <div className="form-outline mb-4">
+      <select className="form-control" id="exampleIdSelect">
+        {items.map(item => (
+          <option key={item}>{item}</option>
+        ))}
+      </select>
+    </div>
+  );
+};
+
+export { Input, Select };

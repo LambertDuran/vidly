@@ -2,6 +2,7 @@ import React from "react";
 import { /*useParams,*/ useNavigate, useLocation } from "react-router-dom";
 import Form from "./login/Form";
 import Joi from "joi-browser";
+import { getGenres } from "./fakeGenreService";
 
 // Add hooks to Movie Component
 // (because u can't add hooks to classes)
@@ -24,6 +25,7 @@ class Movie extends Form {
     const { movie } = this.props.useLocationHook.state;
     this.state = {
       movie: { movie },
+      genres: getGenres(),
       data: {
         title: movie.title,
         genre: movie.genre.name,
@@ -78,10 +80,9 @@ class Movie extends Form {
         <form onSubmit={this.handleSubmit}>
           <h1>Movie Form</h1>
           {this.renderInput("title")}
-          {this.renderInput("genre")}
+          {this.renderSelect(this.state.genres.map(g => g.name))}
           {this.renderInput("numberInStock")}
           {this.renderInput("dailyRentalRate")}
-
           {this.renderButton("Save")}
         </form>
       </div>

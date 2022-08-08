@@ -1,5 +1,5 @@
 import { Component } from "react";
-import Input from "./Input";
+import { Input, Select } from "./Input";
 import Joi from "joi-browser";
 
 class Form extends Component {
@@ -60,6 +60,10 @@ class Form extends Component {
         errors={errors[name]}
       />
     );
+  };
+
+  renderSelect = items => {
+    return <Select items={items} />;
   };
 
   renderButton = label => {
