@@ -48,7 +48,7 @@ class Form extends Component {
     this.doSubmit();
   };
 
-  renderInput = (name, placeholder, type = "Text") => {
+  renderInput = (name, placeholder = "", type = "Text") => {
     const { errors, data } = this.state;
     return (
       <Input

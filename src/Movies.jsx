@@ -7,11 +7,10 @@ import GenreFilter from "./GenreFilter";
 import _ from "lodash";
 import { useLocation } from "react-router-dom";
 
-
 function withLocation(Movies) {
   return function WrappedComponent(props) {
     return <Movies {...props} useLocationValue={useLocation()} />;
-  }
+  };
 }
 
 class Movies extends Component {
@@ -104,14 +103,12 @@ class Movies extends Component {
   };
 
   render() {
-
     let { currentPage, genres, currentGenre, sortColumn } = this.state;
 
-    // Get back the movie properties gine by user from "/movie" route 
+    // Get back the movie properties given by user from "/movie" route
     const useLocationValue = this.props.useLocationValue;
-    const movie = useLocationValue.state
-
-
+    const movie = useLocationValue.state;
+    console.log(movie);
 
     const { filteredMovies, moviesToPrint, nbPages } = this.sortMovies();
 

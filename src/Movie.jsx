@@ -1,26 +1,92 @@
 import React from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { /*useParams,*/ useNavigate, useLocation } from "react-router-dom";
+import Form from "./login/Form";
+import Joi from "joi-browser";
 
+// Add hooks to Movie Component
+// (because u can't add hooks to classes)
+function withHooks(Movie) {
+  return function WrappedLocation(props) {
+    return (
+      <Movie
+        {...props}
+        useLocationHook={useLocation()}
+        useNavigateHook={useNavigate()}
+        //useParamsHook={useParams()}
+      />
+    );
+  };
+}
 
-const Movie = () => {
-  let params = useParams();
-  const location = useLocation()
-  const { movie } = location.state;
-  let navigate = useNavigate();
-  console.log("movie (from Movie)", movie)
-  return (
-    <>
-      <h1> Movie : {params._id}</h1>
-      <button
-        className="btn btn-primary"
-        onClick={() => {
-          navigate("/movies", { replace: true, state: movie });
-        }}
-      >
-        Save
-      </button>
-    </>
-  );
-};
+class Movie extends Form {
+  constructor(props) {
+    super(props);
+    const { movie } = this.props.useLocationHook.state;
+    this.state = {
+      movie: { movie },
+      data: {
+        title: movie.title,
+        genre: movie.genre.name,
+        numberInStock: movie.numberInStock,
+        dailyRentalRate: movie.dailyRentalRate
+      },
+      errors: { title: "", genre: "", numberInStock: "", dailyRentalRate: "" }
+    };
 
-export default Movie;
+    this.schema = {
+      title: Joi.string()
+        .label("Title")
+        .required(),
+      genre: Joi.string()
+        .label("Genre")
+        .required(),
+      numberInStock: Joi.number()
+        .label("Number in stock")
+        .integer()
+        .greater(0)
+        .less(100)
+        .required(),
+      dailyRentalRate: Joi.number()
+        .label("Daily rental rate")
+        .greater(0)
+        .less(10)
+        .required()
+    };
+  }
+
+  doSubmit = () => {
+    // Apply change to movie
+    let { movie, data } = this.state;
+    movie.title = data.title;
+    movie.genre = data.genre;
+    movie.numberInStock = data.numberInStock;
+    movie.dailyRentalRate = data.dailyRentalRate;
+    this.setState({ movie });
+
+    // Send the movie data to "/movies" route
+    let navigate = this.props.useNavigateHook;
+    navigate("/movies", { replace: true, state: movie });
+    console.log("submitted");
+  };
+
+  render() {
+    //let params = this.props.useParamsHook;
+    //<h1> Movie : {params._id}</h1>
+
+    return (
+      <div style={{ justifyContent: "center", padding: 100 }}>
+        <form onSubmit={this.handleSubmit}>
+          <h1>Movie Form</h1>
+          {this.renderInput("title")}
+          {this.renderInput("genre")}
+          {this.renderInput("numberInStock")}
+          {this.renderInput("dailyRentalRate")}
+
+          {this.renderButton("Save")}
+        </form>
+      </div>
+    );
+  }
+}
+
+export default withHooks(Movie);
