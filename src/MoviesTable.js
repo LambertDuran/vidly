@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import _ from "lodash";
 import TableComponent from "./TableComponent";
 
-class Movies extends Component {
+class MoviesTable extends Component {
   constructor(props) {
     super(props);
     this.sortColumns = [
@@ -59,4 +59,4 @@ class Movies extends Component {
   }
 }
 
-export default Movies;
+export default MoviesTable;

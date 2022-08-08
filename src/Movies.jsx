@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { getMovies } from "./fakeMovieService";
 import { getGenres } from "./fakeGenreService";
-import Movies from "./Movies";
+import MoviesTable from "./MoviesTable";
 import Pagination from "./Pagination";
 import GenreFilter from "./GenreFilter";
 import _ from "lodash";
 
-class MoviesTable extends Component {
+class Movies extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -119,7 +119,7 @@ class MoviesTable extends Component {
         </div>
 
         {/* Liste de films */}
-        <Movies
+        <MoviesTable
           movies={moviesToPrint}
           currentPage={currentPage}
           nbMoviesByPage={this.nbMoviesByPage}
@@ -127,7 +127,7 @@ class MoviesTable extends Component {
           onLike={this.handleLike}
           onSort={this.handleSort}
           sortColumn={sortColumn}
-        ></Movies>
+        ></MoviesTable>
 
         {/* Gestionnaire de pages */}
         {filteredMovies.length > this.nbMoviesByPage && (
@@ -142,4 +142,4 @@ class MoviesTable extends Component {
   }
 }
 
-export default MoviesTable;
+export default Movies;

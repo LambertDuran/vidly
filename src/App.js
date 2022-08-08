@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import MoviesTable from "./MoviesTable";
+import Movies from "./Movies";
 import NavBar from "./Navbar";
 import Customers from "./Customers";
 import Rentals from "./Rentals";
@@ -21,8 +21,8 @@ class App extends Component {
       <div>
         <NavBar />
         <Routes>
-          <Route path="/" element={<MoviesTable />}></Route>
-          <Route path="movies" element={<MoviesTable />}></Route>
+          <Route path="/" element={<Movies />}></Route>
+          <Route path="movies" element={<Movies />}></Route>
           <Route path="customers" element={<Customers />}></Route>
           <Route path="rentals" exact element={<Rentals />}></Route>
           <Route path="login" exact element={<LoginForm />}></Route>
