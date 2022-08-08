@@ -13,7 +13,7 @@ class MoviesTable extends Component {
         label: "Title",
         content: movie => {
           return (
-            <Link to={`/movie/${movie._id}`}>{_.get(movie, "title")}</Link>
+            <Link to={`/movie/${movie._id}`} state={{ movie: movie }}>{_.get(movie, "title")}</Link>
           );
         }
       },

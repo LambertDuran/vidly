@@ -1,17 +1,20 @@
 import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 
 
 const Movie = () => {
   let params = useParams();
+  const location = useLocation()
+  const { movie } = location.state;
   let navigate = useNavigate();
+  console.log("movie (from Movie)", movie)
   return (
     <>
       <h1> Movie : {params._id}</h1>
       <button
         className="btn btn-primary"
         onClick={() => {
-          navigate("/movies");
+          navigate("/movies", { replace: true, state: movie });
         }}
       >
         Save

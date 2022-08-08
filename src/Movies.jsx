@@ -5,6 +5,14 @@ import MoviesTable from "./MoviesTable";
 import Pagination from "./Pagination";
 import GenreFilter from "./GenreFilter";
 import _ from "lodash";
+import { useLocation } from "react-router-dom";
+
+
+function withLocation(Movies) {
+  return function WrappedComponent(props) {
+    return <Movies {...props} useLocationValue={useLocation()} />;
+  }
+}
 
 class Movies extends Component {
   constructor(props) {
@@ -96,7 +104,14 @@ class Movies extends Component {
   };
 
   render() {
+
     let { currentPage, genres, currentGenre, sortColumn } = this.state;
+
+    // Get back the movie properties gine by user from "/movie" route 
+    const useLocationValue = this.props.useLocationValue;
+    const movie = useLocationValue.state
+
+
 
     const { filteredMovies, moviesToPrint, nbPages } = this.sortMovies();
 
@@ -142,4 +157,5 @@ class Movies extends Component {
   }
 }
 
-export default Movies;
+// Export Movies component wrapped with location hook
+export default withLocation(Movies);
