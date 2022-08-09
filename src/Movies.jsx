@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getMovies } from "./fakeMovieService";
+import { getMovies, deleteMovie } from "./fakeMovieService";
 import { getGenres } from "./fakeGenreService";
 import MoviesTable from "./MoviesTable";
 import Pagination from "./Pagination";
@@ -24,10 +24,20 @@ class Movies extends Component {
       sortColumn: { path: "title", order: "asc" }
     };
 
+    console.log("constructor");
+
     this.state.genres.push(null);
 
     // Nombre de films maximum à afficher par page
     this.nbMoviesByPage = 4;
+
+    // Get back the movie properties given by user from "/movie" route
+    const movie = this.props.useLocationValue.state;
+    if (movie) {
+      let { movies } = { ...this.state };
+      let index = movies.findIndex(m => m._id === movie._id);
+      if (index) movies[index] = movie;
+    }
   }
 
   handlePage = newPage => {
@@ -43,8 +53,9 @@ class Movies extends Component {
     const { nbPages } = this.sortMovies();
     if (this.state.currentPage >= nbPages - 1)
       this.setState({ movies, currentPage: nbPages - 2 });
+    else this.setState({ movies });
 
-    this.setState({ movies });
+    deleteMovie(movie.id);
   };
 
   // Ajouter un film aux "Like"
@@ -104,11 +115,6 @@ class Movies extends Component {
 
   render() {
     let { currentPage, genres, currentGenre, sortColumn } = this.state;
-
-    // Get back the movie properties given by user from "/movie" route
-    const useLocationValue = this.props.useLocationValue;
-    const movie = useLocationValue.state;
-    console.log(movie);
 
     const { filteredMovies, moviesToPrint, nbPages } = this.sortMovies();
 

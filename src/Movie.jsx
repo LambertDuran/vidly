@@ -24,7 +24,7 @@ class Movie extends Form {
     super(props);
     const { movie } = this.props.useLocationHook.state;
     this.state = {
-      movie: { movie },
+      movie: movie,
       genres: getGenres(),
       data: {
         title: movie.title,
@@ -32,7 +32,12 @@ class Movie extends Form {
         numberInStock: movie.numberInStock,
         dailyRentalRate: movie.dailyRentalRate
       },
-      errors: { title: "", genre: "", numberInStock: "", dailyRentalRate: "" }
+      errors: {
+        title: "",
+        genre: "",
+        numberInStock: "",
+        dailyRentalRate: ""
+      }
     };
 
     this.schema = {
@@ -58,9 +63,9 @@ class Movie extends Form {
 
   doSubmit = () => {
     // Apply change to movie
-    let { movie, data } = this.state;
+    let { movie, data, genres } = this.state;
     movie.title = data.title;
-    movie.genre = data.genre;
+    movie.genre = genres.find(g => g.name === data.genre);
     movie.numberInStock = data.numberInStock;
     movie.dailyRentalRate = data.dailyRentalRate;
     this.setState({ movie });
@@ -68,13 +73,11 @@ class Movie extends Form {
     // Send the movie data to "/movies" route
     let navigate = this.props.useNavigateHook;
     navigate("/movies", { replace: true, state: movie });
-    console.log("submitted");
   };
 
   render() {
     //let params = this.props.useParamsHook;
     //<h1> Movie : {params._id}</h1>
-
     return (
       <div style={{ justifyContent: "center", padding: 100 }}>
         <form onSubmit={this.handleSubmit}>
