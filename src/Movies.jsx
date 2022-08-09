@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { getMovies, deleteMovie } from "./fakeMovieService";
 import { getGenres } from "./fakeGenreService";
+import _ from "lodash";
+import { useLocation } from "react-router-dom";
 import MoviesTable from "./MoviesTable";
 import Pagination from "./Pagination";
 import GenreFilter from "./GenreFilter";
-import _ from "lodash";
-import { useLocation } from "react-router-dom";
+import AddMovie from "./AddMovie";
 
 function withLocation(Movies) {
   return function WrappedComponent(props) {
@@ -130,6 +131,9 @@ class Movies extends Component {
                 onChangeGenre={this.handleGenreChanged}
               ></GenreFilter>
             </div>
+
+            {/*Créer un nouveau film*/}
+            <AddMovie />
 
             {/* Nombre de films dans la base de données */}
             <div className="col-8">{this.printNbMovies(filteredMovies)}</div>
