@@ -20,16 +20,18 @@ class GenreFiler extends React.Component {
     ));
 
     return (
-      <Dropdown>
-        <Dropdown.Toggle
-          style={styles.mainColor}
-          variant="ligth m-2"
-          id="dropdown-basic"
-        >
-          {this.getName(currentGenre)}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>{genreItems}</Dropdown.Menu>
-      </Dropdown>
+      <div className="col">
+        <Dropdown>
+          <Dropdown.Toggle
+            style={styles.mainColor}
+            variant="ligth m-2"
+            id="dropdown-basic"
+          >
+            {this.getName(currentGenre)}
+          </Dropdown.Toggle>
+          <Dropdown.Menu>{genreItems}</Dropdown.Menu>
+        </Dropdown>
+      </div>
     );
   }
 }

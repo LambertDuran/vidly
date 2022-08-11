@@ -7,6 +7,8 @@ import MoviesTable from "./MoviesTable";
 import Pagination from "./Pagination";
 import GenreFilter from "./GenreFilter";
 import AddMovie from "./AddMovie";
+import SearchBar from "./SearchBar";
+import styles from "./styles"
 
 function withLocation(Movies) {
   return function WrappedComponent(props) {
@@ -22,6 +24,7 @@ class Movies extends Component {
       currentPage: 0,
       genres: getGenres(),
       currentGenre: null,
+      search: "",
       sortColumn: { path: "title", order: "asc" },
     };
 
@@ -111,7 +114,7 @@ class Movies extends Component {
 
   printNbMovies = (filteredMovies) => {
     if (filteredMovies.length !== 0)
-      return <h1>{filteredMovies.length} movies in the database :</h1>;
+      return <h1>{filteredMovies.length} movies in the database</h1>;
     return <h1>No movie available :(</h1>;
   };
 
@@ -121,23 +124,26 @@ class Movies extends Component {
     const { filteredMovies, moviesToPrint, nbPages } = this.sortMovies();
 
     return (
-      <div className="App" style={{ paddingLeft: 20, paddingRight: 20 }}>
+      <div className="App" style={{ paddingLeft: 10, paddingRight: 10 }}>
         <div className="container">
           <div className="row">
-            {/* Filtre sur les genres de films */}
-            <div className="col">
+            <div style={styles.rowStyle}>
+              {/* Filtre sur les genres de films */}
               <GenreFilter
                 genres={genres}
                 currentGenre={currentGenre}
                 onChangeGenre={this.handleGenreChanged}
               ></GenreFilter>
+
+              {/*Créer un nouveau film*/}
+              <AddMovie />
+
+              {/* Nombre de films dans la base de données */}
+              <div className="col-6">{this.printNbMovies(filteredMovies)}</div>
+
+              {/*Apply a filter to a reasearch*/}
+              <SearchBar />
             </div>
-
-            {/*Créer un nouveau film*/}
-            <AddMovie />
-
-            {/* Nombre de films dans la base de données */}
-            <div className="col-8">{this.printNbMovies(filteredMovies)}</div>
           </div>
         </div>
 
