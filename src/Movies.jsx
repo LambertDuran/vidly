@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { getMovies, deleteMovie } from "./fakeMovieService";
 import { getGenres } from "./fakeGenreService";
-import _ from "lodash";
+import _, { filter } from "lodash";
 import { useLocation } from "react-router-dom";
 import MoviesTable from "./MoviesTable";
 import Pagination from "./Pagination";
 import GenreFilter from "./GenreFilter";
 import AddMovie from "./AddMovie";
 import SearchBar from "./SearchBar";
-import styles from "./styles"
+import styles from "./styles";
 
 function withLocation(Movies) {
   return function WrappedComponent(props) {
@@ -44,6 +44,10 @@ class Movies extends Component {
       if (index) movies[index] = movie;
     }
   }
+
+  handleSearch = (search) => {
+    this.setState({ search });
+  };
 
   handlePage = (newPage) => {
     this.setState({ currentPage: newPage });
@@ -84,14 +88,23 @@ class Movies extends Component {
   // Filtrer en fonction du genre
   // Et trier en fonction d'une colonne
   sortMovies = () => {
-    let { sortColumn, movies, currentGenre, currentPage } = this.state;
+    let { sortColumn, movies, currentGenre, currentPage, search } = this.state;
 
     // Filtrer la liste des films en fct du genre sélectionné
     let filteredMovies = movies;
-    if (currentGenre !== null)
+    if (currentGenre && search === "")
       filteredMovies = movies.filter(
         (movie) => movie.genre._id === currentGenre._id
       );
+    // Filtre de recherche
+    else if (search !== "") {
+      // On remet le genre à "Tous les genres"
+      currentGenre = null;
+
+      filteredMovies = filteredMovies.filter((m) =>
+        m.title.toLowerCase().includes(search.toLowerCase())
+      );
+    }
 
     // Appliquer un ordre croissant ou décroissant
     filteredMovies = _.orderBy(
@@ -109,7 +122,7 @@ class Movies extends Component {
     if (nbMovieEnd >= filteredMovies.length) nbMovieEnd = filteredMovies.length;
     const moviesToPrint = filteredMovies.slice(nbMovieStart, nbMovieEnd);
 
-    return { filteredMovies, moviesToPrint, nbPages };
+    return { filteredMovies, moviesToPrint, nbPages, currentGenre };
   };
 
   printNbMovies = (filteredMovies) => {
@@ -119,10 +132,10 @@ class Movies extends Component {
   };
 
   render() {
-    let { currentPage, genres, currentGenre, sortColumn } = this.state;
+    let { currentPage, genres, sortColumn } = this.state;
 
-    const { filteredMovies, moviesToPrint, nbPages } = this.sortMovies();
-
+    const { filteredMovies, moviesToPrint, nbPages, currentGenre } =
+      this.sortMovies();
     return (
       <div className="App" style={{ paddingLeft: 10, paddingRight: 10 }}>
         <div className="container">
@@ -142,21 +155,23 @@ class Movies extends Component {
               <div className="col-6">{this.printNbMovies(filteredMovies)}</div>
 
               {/*Apply a filter to a reasearch*/}
-              <SearchBar />
+              <SearchBar handleSearch={this.handleSearch} />
             </div>
           </div>
         </div>
 
         {/* Liste de films */}
-        <MoviesTable
-          movies={moviesToPrint}
-          currentPage={currentPage}
-          nbMoviesByPage={this.nbMoviesByPage}
-          onDelete={this.handleDelete}
-          onLike={this.handleLike}
-          onSort={this.handleSort}
-          sortColumn={sortColumn}
-        ></MoviesTable>
+        {moviesToPrint.length && (
+          <MoviesTable
+            movies={moviesToPrint}
+            currentPage={currentPage}
+            nbMoviesByPage={this.nbMoviesByPage}
+            onDelete={this.handleDelete}
+            onLike={this.handleLike}
+            onSort={this.handleSort}
+            sortColumn={sortColumn}
+          ></MoviesTable>
+        )}
 
         {/* Gestionnaire de pages */}
         {filteredMovies.length > this.nbMoviesByPage && (

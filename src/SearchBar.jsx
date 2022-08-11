@@ -1,6 +1,6 @@
-import React from "react";
+import React, { Component } from "react";
 
-const SearchBar = (props) => {
+const SearchBar = ({ handleSearch }) => {
   return (
     <div className="col-2" style={{ padding: 8 }}>
       <form className="form-inline my-2 my-lg-0">
@@ -9,6 +9,7 @@ const SearchBar = (props) => {
           placeholder="Search"
           aria-label="Search"
           type="search"
+          onChange={({ target }) => handleSearch(target.value)}
         />
       </form>
     </div>
