@@ -46,7 +46,7 @@ class Movies extends Component {
   }
 
   handleSearch = (search) => {
-    this.setState({ search });
+    this.setState({ search: search, currentPage: 1 });
   };
 
   handlePage = (newPage) => {
@@ -139,24 +139,22 @@ class Movies extends Component {
     return (
       <div className="App" style={{ paddingLeft: 10, paddingRight: 10 }}>
         <div className="container">
-          <div className="row">
-            <div style={styles.rowStyle}>
-              {/* Filtre sur les genres de films */}
-              <GenreFilter
-                genres={genres}
-                currentGenre={currentGenre}
-                onChangeGenre={this.handleGenreChanged}
-              ></GenreFilter>
+          <div style={styles.rowStyle}>
+            {/* Filtre sur les genres de films */}
+            <GenreFilter
+              genres={genres}
+              currentGenre={currentGenre}
+              onChangeGenre={this.handleGenreChanged}
+            ></GenreFilter>
 
-              {/*Créer un nouveau film*/}
-              <AddMovie />
+            {/*Créer un nouveau film*/}
+            <AddMovie />
 
-              {/* Nombre de films dans la base de données */}
-              <div className="col-6">{this.printNbMovies(filteredMovies)}</div>
+            {/* Nombre de films dans la base de données */}
+            <div className="col-6">{this.printNbMovies(filteredMovies)}</div>
 
-              {/*Apply a filter to a reasearch*/}
-              <SearchBar handleSearch={this.handleSearch} />
-            </div>
+            {/*Apply a filter to a reasearch*/}
+            <SearchBar handleSearch={this.handleSearch} />
           </div>
         </div>
 

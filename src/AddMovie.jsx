@@ -15,7 +15,7 @@ const AddMovie = (props) => {
   };
 
   return (
-    <div className="col" style={{ padding: 8 }}>
+    <div className="col my-2" style={styles.rowStyle}>
       <Link to={`/movie/${movie._id}`} state={movie}>
         <button className="btn btn-secondary" style={styles.mainColor}>
           New Movie

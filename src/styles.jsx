@@ -16,8 +16,6 @@ const styles = {
   rowStyle: {
     display: "flex",
     alignItems: "flex-wrap",
-    paddingLeft: 10,
-    paddingRight: 10,
   },
 };
 

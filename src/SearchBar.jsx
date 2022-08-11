@@ -3,7 +3,7 @@ import React, { Component } from "react";
 const SearchBar = ({ handleSearch }) => {
   return (
     <div className="col-2" style={{ padding: 8 }}>
-      <form className="form-inline my-2 my-lg-0">
+      <form className="form-inline my-2">
         <input
           className="form-control mr-sm-2"
           placeholder="Search"
