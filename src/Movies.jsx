@@ -22,7 +22,7 @@ class Movies extends Component {
       currentPage: 0,
       genres: getGenres(),
       currentGenre: null,
-      sortColumn: { path: "title", order: "asc" }
+      sortColumn: { path: "title", order: "asc" },
     };
 
     console.log("constructor");
@@ -34,21 +34,23 @@ class Movies extends Component {
 
     // Get back the movie properties given by user from "/movie" route
     const movie = this.props.useLocationValue.state;
+
+    console.log("movie", movie);
     if (movie) {
       let { movies } = { ...this.state };
-      let index = movies.findIndex(m => m._id === movie._id);
+      let index = movies.findIndex((m) => m._id === movie._id);
       if (index) movies[index] = movie;
     }
   }
 
-  handlePage = newPage => {
+  handlePage = (newPage) => {
     this.setState({ currentPage: newPage });
   };
 
   // Supprimer un film de la liste
-  handleDelete = movie => {
+  handleDelete = (movie) => {
     const movies = this.state.movies.filter(
-      movieInList => movieInList !== movie
+      (movieInList) => movieInList !== movie
     );
 
     const { nbPages } = this.sortMovies();
@@ -60,20 +62,20 @@ class Movies extends Component {
   };
 
   // Ajouter un film aux "Like"
-  handleLike = id => {
-    let movie = this.state.movies.find(m => m._id === id);
+  handleLike = (id) => {
+    let movie = this.state.movies.find((m) => m._id === id);
     let movies = [...this.state.movies];
     movies[movies.indexOf(movie)].isLiked = !movie.isLiked;
     this.setState({ movies });
   };
 
   // Changer le filtre de "Genre"
-  handleGenreChanged = genre => {
+  handleGenreChanged = (genre) => {
     this.setState({ currentPage: 0, currentGenre: genre });
   };
 
   // Faire un tri croissant ou décroissant de la liste
-  handleSort = sortColumn => {
+  handleSort = (sortColumn) => {
     this.setState({ sortColumn });
   };
 
@@ -86,7 +88,7 @@ class Movies extends Component {
     let filteredMovies = movies;
     if (currentGenre !== null)
       filteredMovies = movies.filter(
-        movie => movie.genre._id === currentGenre._id
+        (movie) => movie.genre._id === currentGenre._id
       );
 
     // Appliquer un ordre croissant ou décroissant
@@ -108,7 +110,7 @@ class Movies extends Component {
     return { filteredMovies, moviesToPrint, nbPages };
   };
 
-  printNbMovies = filteredMovies => {
+  printNbMovies = (filteredMovies) => {
     if (filteredMovies.length !== 0)
       return <h1>{filteredMovies.length} movies in the database :</h1>;
     return <h1>No movie available :(</h1>;

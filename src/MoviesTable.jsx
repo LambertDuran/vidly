@@ -11,36 +11,38 @@ class MoviesTable extends Component {
       {
         path: "title",
         label: "Title",
-        content: movie => {
+        content: (movie) => {
           return (
-            <Link to={`/movie/${movie._id}`} state={{ movie: movie }}>{_.get(movie, "title")}</Link>
+            <Link to={`/movie/${movie._id}`} state={movie}>
+              {_.get(movie, "title")}
+            </Link>
           );
-        }
+        },
       },
       { path: "genre.name", label: "Genre" },
       { path: "numberInStock", label: "Stock" },
       { path: "dailyRentalRate", label: "Note" },
       {
         path: "like",
-        content: movie => (
+        content: (movie) => (
           <Like
             id={movie._id}
             onLike={this.props.onLike}
             isLiked={movie.isLiked}
           ></Like>
-        )
+        ),
       },
       {
         path: "delete",
-        content: movie => (
+        content: (movie) => (
           <button
             className="btn btn-danger sm"
             onClick={() => this.props.onDelete(movie)}
           >
             Delete
           </button>
-        )
-      }
+        ),
+      },
     ];
   }
 

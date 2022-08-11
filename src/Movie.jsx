@@ -3,6 +3,7 @@ import { /*useParams,*/ useNavigate, useLocation } from "react-router-dom";
 import Form from "./login/Form";
 import Joi from "joi-browser";
 import { getGenres } from "./fakeGenreService";
+import { saveMovie } from "./fakeMovieService";
 
 // Add hooks to Movie Component
 // (because u can't add hooks to classes)
@@ -22,7 +23,7 @@ function withHooks(Movie) {
 class Movie extends Form {
   constructor(props) {
     super(props);
-    const { movie } = this.props.useLocationHook.state;
+    const movie = this.props.useLocationHook.state;
     this.state = {
       movie: movie,
       genres: getGenres(),
@@ -30,23 +31,19 @@ class Movie extends Form {
         title: movie.title,
         genre: movie.genre.name,
         numberInStock: movie.numberInStock,
-        dailyRentalRate: movie.dailyRentalRate
+        dailyRentalRate: movie.dailyRentalRate,
       },
       errors: {
         title: "",
         genre: "",
         numberInStock: "",
-        dailyRentalRate: ""
-      }
+        dailyRentalRate: "",
+      },
     };
 
     this.schema = {
-      title: Joi.string()
-        .label("Title")
-        .required(),
-      genre: Joi.string()
-        .label("Genre")
-        .required(),
+      title: Joi.string().label("Title").required(),
+      genre: Joi.string().label("Genre").required(),
       numberInStock: Joi.number()
         .label("Number in stock")
         .integer()
@@ -57,7 +54,7 @@ class Movie extends Form {
         .label("Daily rental rate")
         .greater(0)
         .less(10)
-        .required()
+        .required(),
     };
   }
 
@@ -65,9 +62,14 @@ class Movie extends Form {
     // Apply change to movie
     let { movie, data, genres } = this.state;
     movie.title = data.title;
-    movie.genre = genres.find(g => g.name === data.genre);
+    movie.genre = genres.find((g) => g.name === data.genre);
     movie.numberInStock = data.numberInStock;
     movie.dailyRentalRate = data.dailyRentalRate;
+
+    // Save in db
+    movie = saveMovie(movie);
+
+    // Save state
     this.setState({ movie });
 
     // Send the movie data to "/movies" route
@@ -83,7 +85,7 @@ class Movie extends Form {
         <form onSubmit={this.handleSubmit}>
           <h1>Movie Form</h1>
           {this.renderInput("title")}
-          {this.renderSelect(this.state.genres.map(g => g.name))}
+          {this.renderSelect(this.state.genres.map((g) => g.name))}
           {this.renderInput("numberInStock")}
           {this.renderInput("dailyRentalRate")}
           {this.renderButton("Save")}
