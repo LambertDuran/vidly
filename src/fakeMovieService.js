@@ -93,7 +93,7 @@ export function saveMovie(movie) {
   movieInDb.isLiked = movie.isLiked
   console.log(movieInDb)
   if (!movieInDb._id) {
-    movieInDb._id = Date.now();
+    movieInDb._id = Date.now().toString();
     movies.push(movieInDb);
   }
 

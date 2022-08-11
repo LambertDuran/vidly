@@ -35,7 +35,6 @@ class Movies extends Component {
     // Get back the movie properties given by user from "/movie" route
     const movie = this.props.useLocationValue.state;
 
-    console.log("movie", movie);
     if (movie) {
       let { movies } = { ...this.state };
       let index = movies.findIndex((m) => m._id === movie._id);
