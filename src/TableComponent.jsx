@@ -1,7 +1,7 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
 import TableHeader from "./TableHeader";
-import MovieBody from "./MovieBody";
+import TableBody from "./TableBody";
 
 const TableComponent = ({ items, onSort, sortColumn, sortColumns }) => {
   return (
@@ -17,7 +17,7 @@ const TableComponent = ({ items, onSort, sortColumn, sortColumns }) => {
           </tr>
         </thead>
         <tbody>
-          <MovieBody items={items} columns={sortColumns} />
+          <TableBody items={items} columns={sortColumns} />
         </tbody>
       </Table>
     )
