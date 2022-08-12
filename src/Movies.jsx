@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { getMovies, deleteMovie } from "./fakeMovieService";
-import { getGenres } from "./fakeGenreService";
+import getGenres from "./services/genreService";
 import _ from "lodash";
 import { useLocation } from "react-router-dom";
 import MoviesTable from "./MoviesTable";
@@ -22,15 +22,13 @@ class Movies extends Component {
     this.state = {
       movies: getMovies(),
       currentPage: 0,
-      genres: getGenres(),
+      genres: [],
       currentGenre: null,
       search: "",
       sortColumn: { path: "title", order: "asc" },
     };
 
     console.log("constructor");
-
-    this.state.genres.push(null);
 
     // Nombre de films maximum à afficher par page
     this.nbMoviesByPage = 4;
@@ -44,6 +42,11 @@ class Movies extends Component {
       if (index) movies[index] = movie;
     }
   }
+
+  componentDidMount = async () => {
+    const genres = await getGenres();
+    this.setState({ genres });
+  };
 
   handleSearch = (search) => {
     this.setState({ search: search, currentPage: 1 });
