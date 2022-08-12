@@ -1,7 +1,7 @@
 import React from "react";
 
-class MovieHeader extends React.Component {
-  onSortColumn = selectedColumn => {
+class TableHeader extends React.Component {
+  onSortColumn = (selectedColumn) => {
     let { sortColumn } = this.props;
     if (sortColumn.path === selectedColumn.path)
       selectedColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
@@ -9,7 +9,7 @@ class MovieHeader extends React.Component {
     this.props.onSort(selectedColumn);
   };
 
-  renderSortIcon = c => {
+  renderSortIcon = (c) => {
     const { sortColumn } = this.props;
     return (
       c.path === sortColumn.path && (
@@ -19,7 +19,7 @@ class MovieHeader extends React.Component {
   };
 
   render() {
-    return this.props.sortColumns.map(c => (
+    return this.props.sortColumns.map((c) => (
       <th
         key={c.path}
         style={{ cursor: "pointer" }}
@@ -32,4 +32,4 @@ class MovieHeader extends React.Component {
   }
 }
 
-export default MovieHeader;
+export default TableHeader;

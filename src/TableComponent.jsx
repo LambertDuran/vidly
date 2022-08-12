@@ -1,6 +1,6 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
-import MovieHeader from "./MovieHeader";
+import TableHeader from "./TableHeader";
 import MovieBody from "./MovieBody";
 
 const TableComponent = ({ items, onSort, sortColumn, sortColumns }) => {
@@ -9,7 +9,7 @@ const TableComponent = ({ items, onSort, sortColumn, sortColumns }) => {
       <Table className="table-light">
         <thead>
           <tr>
-            <MovieHeader
+            <TableHeader
               onSort={onSort}
               sortColumn={sortColumn}
               sortColumns={sortColumns}
