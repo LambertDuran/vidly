@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Like from "./Like";
+import Like from "./common/Like";
 import { Link } from "react-router-dom";
 import _ from "lodash";
-import TableComponent from "./TableComponent";
+import TableComponent from "./common/TableComponent";
 
 class MoviesTable extends Component {
   constructor(props) {

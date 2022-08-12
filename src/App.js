@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import "./App.css";
 import Movies from "./Movies";
-import NavBar from "./Navbar";
+import NavBar from "./common/Navbar";
 import Customers from "./Customers";
 import Rentals from "./Rentals";
 import { Route, Routes } from "react-router-dom";
-import NotFound from "./NotFound";
+import NotFound from "./common/NotFound";
 import Movie from "./Movie";
-import LoginForm from "./login/LoginForm";
-import RegisterForm from "./login/RegisterForm";
+import LoginForm from "./LoginForm";
+import RegisterForm from "./RegisterForm";
 
 class App extends Component {
   constructor(props) {

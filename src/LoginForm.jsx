@@ -1,8 +1,8 @@
 import React from "react";
-import "../App.css";
+import "./App.css";
 import "./LoginForm.css";
-import Form from "./Form";
-import movie from "../img/movie.jpg";
+import Form from "./common/Form";
+import movie from "./img/movie.jpg";
 import Joi from "joi-browser";
 import { Link } from "react-router-dom";
 
@@ -11,16 +11,12 @@ class LoginForm extends Form {
     super(props);
     this.state = {
       data: { userName: "", password: "" },
-      errors: { userName: "", password: "" }
+      errors: { userName: "", password: "" },
     };
 
     this.schema = {
-      userName: Joi.string()
-        .label("Username")
-        .required(),
-      password: Joi.string()
-        .label("Password")
-        .required()
+      userName: Joi.string().label("Username").required(),
+      password: Joi.string().label("Password").required(),
     };
   }
 
@@ -41,13 +37,12 @@ class LoginForm extends Form {
                 <div className="row g-0">
                   <div className="col-lg-6">
                     <div className="card-body p-md-5 mx-md-4">
-                      <div className="text-center">
+                      <div className="text-center" style={{ padding: 50 }}>
                         <img
                           src={movie}
                           style={{ width: "185px" }}
                           alt="logo"
                         />
-                        <h4 className="mt-1 mb-5 pb-1"></h4>
                       </div>
 
                       <form onSubmit={this.handleSubmit}>

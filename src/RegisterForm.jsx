@@ -1,26 +1,19 @@
 import React from "react";
 import Joi from "joi-browser";
-import Form from "./Form";
+import Form from "./common/Form";
 
 class RegisterForm extends Form {
   constructor(props) {
     super(props);
     this.state = {
       data: { userName: "", password: "", pseudo: "" },
-      errors: { userName: "", password: "", pseudo: "" }
+      errors: { userName: "", password: "", pseudo: "" },
     };
 
     this.schema = {
-      userName: Joi.string()
-        .label("Username")
-        .required(),
-      password: Joi.string()
-        .label("Password")
-        .min(5)
-        .required(),
-      pseudo: Joi.string()
-        .label("Pseudo")
-        .required()
+      userName: Joi.string().label("Username").required(),
+      password: Joi.string().label("Password").min(5).required(),
+      pseudo: Joi.string().label("Pseudo").required(),
     };
   }
 

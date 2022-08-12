@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { getMovies, deleteMovie } from "./fakeMovieService";
 import { getGenres } from "./fakeGenreService";
-import _, { filter } from "lodash";
+import _ from "lodash";
 import { useLocation } from "react-router-dom";
 import MoviesTable from "./MoviesTable";
-import Pagination from "./Pagination";
+import Pagination from "./common/Pagination";
 import GenreFilter from "./GenreFilter";
 import AddMovie from "./AddMovie";
-import SearchBar from "./SearchBar";
+import SearchBar from "./common/SearchBar";
 import styles from "./styles";
 
 function withLocation(Movies) {

@@ -1,6 +1,6 @@
 import React from "react";
 import { /*useParams,*/ useNavigate, useLocation } from "react-router-dom";
-import Form from "./login/Form";
+import Form from "./common/Form";
 import Joi from "joi-browser";
 import { getGenres } from "./fakeGenreService";
 import { saveMovie } from "./fakeMovieService";
