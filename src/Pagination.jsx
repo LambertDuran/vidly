@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styles from "./styles";
 
 class Pagination extends Component {
-  getListItem = i => {
+  getListItem = (i) => {
     if (i === this.props.currentPage)
       return (
         <li
@@ -23,7 +23,7 @@ class Pagination extends Component {
           className="page-item"
           onClick={() => this.props.onPageChanged(i)}
         >
-          <a className="page-link" href="#">
+          <a className="page-link" href="/#">
             {i}
           </a>
         </li>
