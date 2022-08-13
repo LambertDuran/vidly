@@ -61,7 +61,6 @@ class Movie extends Form {
     const genres = await getGenres();
     const movie = this.props.useLocationHook.state;
     const navigate = this.props.useNavigateHook;
-    console.log(movie);
     if (movie) {
       const data = {
         title: movie.title,

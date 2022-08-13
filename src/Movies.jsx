@@ -50,7 +50,7 @@ class Movies extends Component {
   };
 
   handleSearch = (search) => {
-    this.setState({ search: search, currentPage: 1 });
+    this.setState({ search: search, currentPage: 0 });
   };
 
   handlePage = (newPage) => {
@@ -105,7 +105,8 @@ class Movies extends Component {
   // Filtrer en fonction du genre
   // Et trier en fonction d'une colonne
   sortMovies = () => {
-    let { sortColumn, movies, currentGenre, currentPage, search } = this.state;
+    let { sortColumn, movies, genres, currentGenre, currentPage, search } =
+      this.state;
 
     // Filtrer la liste des films en fct du genre sélectionné
     let filteredMovies = movies;
@@ -117,7 +118,7 @@ class Movies extends Component {
     // Filtre de recherche
     else if (search !== "") {
       // On remet le genre à "Tous les genres"
-      currentGenre = null;
+      currentGenre = genres[genres.length - 1];
 
       filteredMovies = filteredMovies.filter((m) =>
         m.title.toLowerCase().includes(search.toLowerCase())
@@ -154,6 +155,7 @@ class Movies extends Component {
 
     const { filteredMovies, moviesToPrint, nbPages, currentGenre } =
       this.sortMovies();
+
     return (
       <div className="App" style={{ paddingLeft: 10, paddingRight: 10 }}>
         <div className="container">
