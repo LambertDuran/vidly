@@ -3,19 +3,17 @@ import Dropdown from "react-bootstrap/Dropdown";
 import styles from "./styles";
 
 class GenreFiler extends React.Component {
-  getName = genre => (genre === null ? "All genre" : genre.name);
-
   render() {
     const { genres, currentGenre, onChangeGenre } = this.props;
 
-    const genreItems = genres.map(genre => (
+    const genreItems = genres.map((genre) => (
       <Dropdown.Item
-        key={genre === null ? 0 : genre._id}
+        key={genre._id}
         active={currentGenre === genre}
         onClick={() => onChangeGenre(genre)}
         href="#"
       >
-        {this.getName(genre)}
+        {genre.name}
       </Dropdown.Item>
     ));
 
@@ -27,7 +25,7 @@ class GenreFiler extends React.Component {
             variant="ligth m-2"
             id="dropdown-basic"
           >
-            {this.getName(currentGenre)}
+            {currentGenre.name}
           </Dropdown.Toggle>
           <Dropdown.Menu>{genreItems}</Dropdown.Menu>
         </Dropdown>

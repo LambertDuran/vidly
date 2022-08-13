@@ -33,7 +33,7 @@ class Form extends Component {
     return errors;
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     // Prevent validation without filling form
     e.preventDefault();
 
@@ -62,11 +62,11 @@ class Form extends Component {
     );
   };
 
-  renderSelect = items => {
+  renderSelect = (items) => {
     return <Select items={items} />;
   };
 
-  renderButton = label => {
+  renderButton = (label) => {
     return (
       <button
         className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"

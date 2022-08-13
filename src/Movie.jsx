@@ -2,8 +2,8 @@ import React from "react";
 import { /*useParams,*/ useNavigate, useLocation } from "react-router-dom";
 import Form from "./common/Form";
 import Joi from "joi-browser";
-import { getGenres } from "./fakeGenreService";
-import { saveMovie } from "./fakeMovieService";
+import getGenres from "./services/genreService";
+import { saveMovie } from "./services/movieServices";
 
 // Add hooks to Movie Component
 // (because u can't add hooks to classes)
@@ -25,17 +25,17 @@ class Movie extends Form {
     super(props);
     const movie = this.props.useLocationHook.state;
     this.state = {
+      genres: [],
       movie: movie,
-      genres: getGenres(),
       data: {
         title: movie.title,
-        genre: movie.genre.name,
+        genreId: movie.genre._id,
         numberInStock: movie.numberInStock,
         dailyRentalRate: movie.dailyRentalRate,
       },
       errors: {
         title: "",
-        genre: "",
+        genreId: "",
         numberInStock: "",
         dailyRentalRate: "",
       },
@@ -43,7 +43,7 @@ class Movie extends Form {
 
     this.schema = {
       title: Joi.string().label("Title").required(),
-      genre: Joi.string().label("Genre").required(),
+      genreId: Joi.string().label("Genre").required(),
       numberInStock: Joi.number()
         .label("Number in stock")
         .integer()
@@ -58,16 +58,21 @@ class Movie extends Form {
     };
   }
 
-  doSubmit = () => {
+  componentDidMount = async () => {
+    const genres = await getGenres();
+    this.setState({ genres });
+  };
+
+  doSubmit = async () => {
     // Apply change to movie
     let { movie, data, genres } = this.state;
     movie.title = data.title;
-    movie.genre = genres.find((g) => g.name === data.genre);
+    movie.genre = genres.find((g) => g._id === data.genreId);
     movie.numberInStock = data.numberInStock;
     movie.dailyRentalRate = data.dailyRentalRate;
 
     // Save in db
-    movie = saveMovie(movie);
+    movie = await saveMovie(movie);
 
     // Save state
     this.setState({ movie });
@@ -80,6 +85,7 @@ class Movie extends Form {
   render() {
     //let params = this.props.useParamsHook;
     //<h1> Movie : {params._id}</h1>
+
     return (
       <div style={{ justifyContent: "center", padding: 100 }}>
         <form onSubmit={this.handleSubmit}>

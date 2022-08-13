@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./App.css";
+import { ToastContainer } from "react-toastify";
 import Movies from "./Movies";
 import NavBar from "./common/Navbar";
 import Customers from "./Customers";
@@ -9,6 +9,8 @@ import NotFound from "./common/NotFound";
 import Movie from "./Movie";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
+import "./App.css";
+import "react-toastify/dist/ReactToastify.min.css";
 
 class App extends Component {
   constructor(props) {
@@ -19,6 +21,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        <ToastContainer />
         <NavBar />
         <Routes>
           <Route path="/" element={<Movies />}></Route>

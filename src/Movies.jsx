@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { useLocation } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import _ from "lodash";
 import { getMovies, deleteMovie } from "./services/movieServices";
 import getGenres from "./services/genreService";
@@ -24,7 +24,7 @@ class Movies extends Component {
       movies: [],
       genres: [],
       currentPage: 0,
-      currentGenre: null,
+      currentGenre: { name: "All Genre", _id: Date.now().toString() },
       search: "",
       sortColumn: { path: "title", order: "asc" },
     };
@@ -44,6 +44,7 @@ class Movies extends Component {
 
   componentDidMount = async () => {
     const genres = await getGenres();
+    genres.push(this.state.currentGenre);
     const movies = await getMovies();
     this.setState({ genres, movies });
   };
@@ -57,7 +58,7 @@ class Movies extends Component {
   };
 
   // Supprimer un film de la liste
-  handleDelete = (movie) => {
+  handleDelete = async (movie) => {
     // Sauvegarder le state
     const oldMovies = this.state.movies;
 
@@ -74,7 +75,7 @@ class Movies extends Component {
 
     // Supprimer le film de la db
     try {
-      deleteMovie(movie);
+      await deleteMovie(movie);
     } catch (ex) {
       toast.error("Movie already deleted");
 
@@ -108,10 +109,11 @@ class Movies extends Component {
 
     // Filtrer la liste des films en fct du genre sélectionné
     let filteredMovies = movies;
-    if (currentGenre && search === "")
+    if (currentGenre.name !== "All Genre" && search === "") {
       filteredMovies = movies.filter(
         (movie) => movie.genre._id === currentGenre._id
       );
+    }
     // Filtre de recherche
     else if (search !== "") {
       // On remet le genre à "Tous les genres"
@@ -154,7 +156,6 @@ class Movies extends Component {
       this.sortMovies();
     return (
       <div className="App" style={{ paddingLeft: 10, paddingRight: 10 }}>
-        <ToastContainer />
         <div className="container">
           <div style={styles.rowStyle}>
             {/* Filtre sur les genres de films */}
