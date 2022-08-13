@@ -166,7 +166,7 @@ class Movies extends Component {
             ></GenreFilter>
 
             {/*Créer un nouveau film*/}
-            <AddMovie />
+            <AddMovie genres={genres} />
 
             {/* Nombre de films dans la base de données */}
             <div className="col-6">{this.printNbMovies(filteredMovies)}</div>

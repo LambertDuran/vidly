@@ -1,14 +1,13 @@
 import React from "react";
 import styles from "./styles";
 import { Link } from "react-router-dom";
-import { genres } from "./fakeGenreService";
 
 const AddMovie = (props) => {
   // Create new movie and save it in db to give him an id
   let movie = {
-    _id: "id_0",
+    _id: Date.now().toString(),
     title: "",
-    genre: genres[0],
+    genre: props.genres[0],
     numberInStock: 0,
     dailyRentalRate: 0,
     isLiked: false,

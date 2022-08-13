@@ -25,6 +25,8 @@ async function saveMovie(movie) {
   movieInDb.numberInStock = movie.numberInStock;
   movieInDb.dailyRentalRate = movie.dailyRentalRate;
 
+  console.log(movieInDb);
+
   // Ajouter le film à la db s'il n'existe pas encore
   if (!movieInDb._id) {
     movieInDb._id = Date.now().toString();

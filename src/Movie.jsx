@@ -23,15 +23,14 @@ function withHooks(Movie) {
 class Movie extends Form {
   constructor(props) {
     super(props);
-    const movie = this.props.useLocationHook.state;
     this.state = {
       genres: [],
-      movie: movie,
+      movie: undefined,
       data: {
-        title: movie.title,
-        genreId: movie.genre._id,
-        numberInStock: movie.numberInStock,
-        dailyRentalRate: movie.dailyRentalRate,
+        title: "",
+        genreId: "",
+        numberInStock: "",
+        dailyRentalRate: "",
       },
       errors: {
         title: "",
@@ -60,7 +59,18 @@ class Movie extends Form {
 
   componentDidMount = async () => {
     const genres = await getGenres();
-    this.setState({ genres });
+    const movie = this.props.useLocationHook.state;
+    const navigate = this.props.useNavigateHook;
+    console.log(movie);
+    if (movie) {
+      const data = {
+        title: movie.title,
+        genreId: movie.genre._id,
+        numberInStock: movie.numberInStock,
+        dailyRentalRate: movie.dailyRentalRate,
+      };
+      this.setState({ genres, movie, data });
+    } else navigate("*");
   };
 
   doSubmit = async () => {
@@ -70,6 +80,7 @@ class Movie extends Form {
     movie.genre = genres.find((g) => g._id === data.genreId);
     movie.numberInStock = data.numberInStock;
     movie.dailyRentalRate = data.dailyRentalRate;
+    movie.genreId = data.genreId;
 
     // Save in db
     movie = await saveMovie(movie);
