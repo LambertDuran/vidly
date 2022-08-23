@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { ToastContainer } from "react-toastify";
+import { Route, Routes } from "react-router-dom";
+import jwtDecode from "jwt-decode";
 import Movies from "./Movies";
 import NavBar from "./common/Navbar";
 import Customers from "./Customers";
 import Rentals from "./Rentals";
-import { Route, Routes } from "react-router-dom";
 import NotFound from "./common/NotFound";
 import Movie from "./Movie";
 import LoginForm from "./LoginForm";
@@ -18,11 +19,19 @@ class App extends Component {
     this.state = {};
   }
 
+  componentDidMount() {
+    try {
+      const jwt = localStorage.getItem("token");
+      const user = jwtDecode(jwt);
+      this.setState({ user });
+    } catch (ex) {}
+  }
+
   render() {
     return (
       <div>
         <ToastContainer />
-        <NavBar />
+        <NavBar user={this.state.user} />
         <Routes>
           <Route path="/" element={<Movies />}></Route>
           <Route path="movies" element={<Movies />}></Route>
