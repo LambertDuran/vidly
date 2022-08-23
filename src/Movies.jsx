@@ -46,7 +46,6 @@ class Movies extends Component {
     const genres = await getGenres();
     genres.push(this.state.currentGenre);
     const movies = await getMovies();
-    console.log(movies);
     this.setState({ genres, movies });
   };
 
