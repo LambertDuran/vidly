@@ -17,8 +17,6 @@ class GenreFiler extends React.Component {
       </Dropdown.Item>
     ));
 
-    console.log("currentGenre", currentGenre);
-
     return (
       <div className="col">
         <Dropdown>

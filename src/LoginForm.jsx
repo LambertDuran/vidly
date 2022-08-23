@@ -5,6 +5,7 @@ import Form from "./common/Form";
 import movie from "./img/movie.jpg";
 import Joi from "joi-browser";
 import { Link } from "react-router-dom";
+import { login } from "./services/authServices";
 
 class LoginForm extends Form {
   constructor(props) {
@@ -20,8 +21,17 @@ class LoginForm extends Form {
     };
   }
 
-  doSubmit = () => {
-    console.log("submitted");
+  doSubmit = async () => {
+    try {
+      const { data } = this.state;
+      await login(data.userName, data.password);
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        const errors = { ...this.state.errors };
+        errors.userName = ex.response.data;
+        this.setState({ errors });
+      }
+    }
   };
 
   render() {
