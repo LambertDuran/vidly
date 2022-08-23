@@ -15,15 +15,16 @@ async function saveMovie(movie) {
   const movies = await getMovies();
 
   // récupérer le film dans la db
-  let movieInDb = movies.find((m) => m._id === movie._id) || {};
+  let movieInDb =
+    movies.find((m) => {
+      return m._id === movie._id;
+    }) || {};
 
   // modifier ses propriétés ou les créer s'il n'est pas encore dans la db
   movieInDb.title = movie.title;
   movieInDb.genreId = movie.genre._id;
   movieInDb.numberInStock = movie.numberInStock;
   movieInDb.dailyRentalRate = movie.dailyRentalRate;
-
-  console.log(movieInDb);
 
   // Ajouter le film à la db s'il n'existe pas encore
   if (!movieInDb._id) await http.post(config.moviesEndpoint, movieInDb);
