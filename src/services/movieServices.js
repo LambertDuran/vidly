@@ -26,13 +26,16 @@ async function saveMovie(movie) {
   movieInDb.numberInStock = movie.numberInStock;
   movieInDb.dailyRentalRate = movie.dailyRentalRate;
 
+  console.log("movie", movieInDb);
+
   // Ajouter le film à la db s'il n'existe pas encore
   if (!movieInDb._id) await http.post(config.moviesEndpoint, movieInDb);
   // Sinon juste le modifier dans la db
   else {
+    const movieId = movieInDb._id;
     delete movieInDb._id;
     delete movieInDb.genre;
-    await http.put(config.moviesEndpoint + "/" + movieInDb._id, movieInDb);
+    await http.put(config.moviesEndpoint + "/" + movieId, movieInDb);
   }
 
   return movieInDb;

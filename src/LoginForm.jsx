@@ -5,7 +5,7 @@ import Form from "./common/Form";
 import movie from "./img/movie.jpg";
 import Joi from "joi-browser";
 import { Link } from "react-router-dom";
-import { login } from "./services/authServices";
+import auth from "./services/authServices";
 
 class LoginForm extends Form {
   constructor(props) {
@@ -24,8 +24,7 @@ class LoginForm extends Form {
   doSubmit = async () => {
     try {
       const { data } = this.state;
-      const { data: jwt } = await login(data.userName, data.password);
-      localStorage.setItem("token", jwt);
+      await auth.login(data.userName, data.password);
       window.location = "/";
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {

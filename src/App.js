@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import { Route, Routes } from "react-router-dom";
-import jwtDecode from "jwt-decode";
+import auth from "./services/authServices";
 import Movies from "./Movies";
 import NavBar from "./common/Navbar";
 import Customers from "./Customers";
@@ -18,13 +18,7 @@ const App = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    try {
-      console.log("useEffect");
-      const jwt = localStorage.getItem("token");
-      const jwtUser = jwtDecode(jwt);
-      console.log("user", jwtUser);
-      setUser(jwtUser);
-    } catch (ex) {}
+    setUser(auth.getCurrentUser());
   }, []);
 
   return (

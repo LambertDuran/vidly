@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 class NavBar extends Component {
   render() {
-    console.log("navbar rendering");
     let navItems = [
       { name: "Movies", route: "/" },
       { name: "Customers", route: "/customers" },
