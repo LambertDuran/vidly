@@ -77,7 +77,7 @@ class Movies extends Component {
     try {
       await deleteMovie(movie);
     } catch (ex) {
-      toast.error("Movie already deleted");
+      toast.error(ex.response.data);
 
       // Ré-appliquer l'ancien state si une erreur
       this.setState({ movies: oldMovies });
@@ -152,7 +152,7 @@ class Movies extends Component {
 
   render() {
     let { currentPage, genres, sortColumn } = this.state;
-
+    const { user } = this.props;
     const { filteredMovies, moviesToPrint, nbPages, currentGenre } =
       this.sortMovies();
 
@@ -168,7 +168,7 @@ class Movies extends Component {
             ></GenreFilter>
 
             {/*Créer un nouveau film*/}
-            <AddMovie genres={genres} />
+            {user && <AddMovie genres={genres} />}
 
             {/* Nombre de films dans la base de données */}
             <div className="col-6">{this.printNbMovies(filteredMovies)}</div>

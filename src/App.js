@@ -26,8 +26,8 @@ const App = () => {
       <ToastContainer />
       <NavBar user={user} />
       <Routes>
-        <Route path="/" element={<Movies />}></Route>
-        <Route path="movies" element={<Movies />}></Route>
+        <Route path="/" element={<Movies user={user} />}></Route>
+        <Route path="movies" element={<Movies user={user} />}></Route>
         <Route path="customers" element={<Customers />}></Route>
         <Route path="rentals" exact element={<Rentals />}></Route>
         <Route path="login" exact element={<LoginForm />}></Route>
