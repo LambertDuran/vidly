@@ -11,6 +11,7 @@ import Movie from "./Movie";
 import LoginForm from "./LoginForm";
 import Logout from "./logout";
 import RegisterForm from "./RegisterForm";
+import ProtectedRoute from "./ProtectedRoute";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.min.css";
 
@@ -32,7 +33,15 @@ const App = () => {
         <Route path="rentals" exact element={<Rentals />}></Route>
         <Route path="login" exact element={<LoginForm />}></Route>
         <Route path="register" exact element={<RegisterForm />}></Route>
-        <Route path="movie/:_id" exact element={<Movie />}></Route>
+        <Route
+          path="movie/:_id"
+          exact
+          element={
+            <ProtectedRoute user={user}>
+              <Movie />
+            </ProtectedRoute>
+          }
+        ></Route>
         <Route path="logout" exact element={<Logout />}></Route>
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
